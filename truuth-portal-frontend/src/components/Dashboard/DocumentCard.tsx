@@ -46,18 +46,21 @@ export default function DocumentCard({
       formData.append("file", file)
       formData.append("type", type)
 
-      setUploading(true)
+      
 
         try {
-
+          setUploading(true)
           await uploadDocument(formData)
           await reload()
 
-        } catch {
+        } catch (err: any) {
 
-          alert("Upload failed")
+            const message =
+              err?.response?.data?.message || "Upload failed"
 
-        } finally {
+            alert(message)
+
+          }finally {
 
           setUploading(false)
 
