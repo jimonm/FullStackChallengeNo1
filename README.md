@@ -1,7 +1,7 @@
 # FullStackChallengeNo1
 Truuth Hiring Full Stack Challenge
 
-Architecture:
+*Architecture:*
 The application uses a React frontend deployed on Vercel and a Node.js + Express backend implemented as Vercel serverless functions. Prisma ORM is used to interact with a PostgreSQL database. Authentication is handled using JWT tokens with a middleware protecting API routes.
 
 Document Upload:
