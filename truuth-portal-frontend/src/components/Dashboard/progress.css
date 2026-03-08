@@ -1,0 +1,46 @@
+.progress-card{
+  background:white;
+  padding:25px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin-bottom:35px;
+}
+
+.progress-header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.progress-header h3{
+  font-size:18px;
+}
+
+.progress-header p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.progress-count span{
+  font-size:28px;
+  font-weight:700;
+  color:var(--primary);
+}
+
+.bar{
+  height:8px;
+  background:#e9e9f3;
+  border-radius:6px;
+  margin:10px 0;
+}
+
+.bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,#7a19ff,#9a39ff);
+  border-radius:6px;
+}
+
+.progress-text{
+  font-size:12px;
+  color:var(--muted);
+}

@@ -1,0 +1,79 @@
+:root{
+  --primary:#7a19ff;
+  --primary-dark:#5b10d4;
+  --bg:#f5f6fb;
+  --card:#ffffff;
+  --border:#e4e6f1;
+  --text:#1e1f25;
+  --muted:#6e6f7b;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Inter, sans-serif;
+}
+
+body{
+  background:var(--bg);
+}
+
+.container{
+  width:1100px;
+  margin:auto;
+}
+
+button{
+  cursor:pointer;
+  border:none;
+}
+
+.primary-btn{
+  background:linear-gradient(90deg,#7a19ff,#9a39ff);
+  color:white;
+  padding:10px 20px;
+  border-radius:8px;
+  font-weight:600;
+}
+
+.outline-btn{
+  border:2px solid var(--primary);
+  color:var(--primary);
+  background:transparent;
+  padding:10px 18px;
+  border-radius:8px;
+}
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-card{
+  background:white;
+  padding:30px;
+  width:700px;
+  max-height:80vh;
+  overflow:auto;
+  border-radius:10px;
+}
+
+.result-json{
+  background:#111;
+  color:#0f0;
+  padding:15px;
+  border-radius:6px;
+  margin-top:15px;
+}
+
+.modal-actions{
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+}

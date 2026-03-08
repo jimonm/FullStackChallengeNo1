@@ -1,0 +1,37 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  company   String
+  createdAt DateTime @default(now())
+
+  documents Document[]
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  userId    String
+  type      String
+  label     String?
+  fileUrl   String
+
+  status    String   @default("UNVERIFIED")
+
+  documentVerifyId String?
+  verificationResult Json?
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields:[userId], references:[id])
+}
