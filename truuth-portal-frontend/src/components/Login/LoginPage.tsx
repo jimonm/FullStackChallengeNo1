@@ -2,6 +2,8 @@ import { useState } from "react"
 import axios from "axios"
 import "./login.css"
 
+const API = import.meta.env.VITE_API_URL
+
 export default function LoginPage({ onLogin }: any){
 
   const [email,setEmail] = useState("")
@@ -14,7 +16,7 @@ export default function LoginPage({ onLogin }: any){
     try{
 
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API}/auth/login`,
         {
           email,
           password
