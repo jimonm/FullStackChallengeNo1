@@ -26,3 +26,43 @@
   width:100%;
   margin-top:15px;
 }
+
+.primary-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  background:#5b21b6;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s ease;
+}
+
+.primary-btn:hover{
+  background:#4c1d95;
+}
+
+.primary-btn.loading{
+  background:#9ca3af;
+  cursor:not-allowed;
+  opacity:0.8;
+}
+
+.primary-btn.loading::after{
+  content:"";
+  margin-left:8px;
+  width:14px;
+  height:14px;
+  border:2px solid white;
+  border-top:2px solid transparent;
+  border-radius:50%;
+  display:inline-block;
+  animation:spin 0.7s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}

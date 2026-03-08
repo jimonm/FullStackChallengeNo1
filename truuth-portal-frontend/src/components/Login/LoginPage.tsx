@@ -8,19 +8,18 @@ export default function LoginPage({ onLogin }: any){
 
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
+  const [loading,setLoading] = useState(false)
 
   const handleLogin = async (e:any) => {
 
     e.preventDefault()
+    setLoading(true)
 
     try{
 
       const res = await axios.post(
         `${API}/auth/login`,
-        {
-          email,
-          password
-        }
+        { email, password }
       )
 
       const { token, user } = res.data
@@ -34,6 +33,7 @@ export default function LoginPage({ onLogin }: any){
     catch(err){
 
       alert("Invalid login credentials")
+      setLoading(false)
 
     }
 
@@ -67,10 +67,11 @@ export default function LoginPage({ onLogin }: any){
           />
 
           <button
-            className="primary-btn"
+            className={`primary-btn ${loading ? "loading" : ""}`}
             type="submit"
+            disabled={loading}
           >
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </button>
 
         </form>
