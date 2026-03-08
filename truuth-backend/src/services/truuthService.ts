@@ -87,7 +87,6 @@
 // }
 
 import axios from "axios"
-import { fileToBase64 } from "../utils/fileToBase64"
 import { getTruuthAuthHeader } from "../utils/truuthAuth"
 
 /*
@@ -95,11 +94,11 @@ CLASSIFIER API
 */
 
 export async function classifyDocument(
-  filePath: string,
+  fileBuffer: Buffer,
   mimeType: string
 ) {
 
-  const base64 = fileToBase64(filePath)
+  const base64 = fileBuffer.toString("base64")
 
   const response = await axios.post(
     process.env.TRUUTH_CLASSIFIER_URL!,
@@ -122,13 +121,13 @@ export async function classifyDocument(
   return response.data
 }
 
+
 /*
-VERIFY API - having credential issues with AWS signature v4, so skipping for now and returning temporary response
+VERIFY API (skipped for now)
 */
 
-export async function submitVerification(filePath: string) {
+export async function submitVerification(fileBuffer: Buffer) {
 
-  // Temporary response
   return {
     status: "IN_PROGRESS",
     message: "Verification started"
