@@ -1,0 +1,35 @@
+service: truuth-portal-api
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: dev
+
+functions:
+
+  login:
+    handler: api/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+
+  upload:
+    handler: api/upload.handler
+    events:
+      - http:
+          path: upload
+          method: post
+          cors: true
+
+  verify:
+    handler: api/verify.handler
+    events:
+      - http:
+          path: verify
+          method: post
+          cors: true
