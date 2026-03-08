@@ -21,7 +21,8 @@ export default function Dashboard() {
     }
   }, 5000)
   return () => clearInterval(interval)
-}, [documents])
+}, [])
+
   async function loadDocuments() {
     const docs = await fetchDocuments()
     setDocuments(docs)
