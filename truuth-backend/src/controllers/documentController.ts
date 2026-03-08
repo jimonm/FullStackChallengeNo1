@@ -1,6 +1,12 @@
 import prisma from "../config/db"
 import { classifyDocument } from "../services/truuthService"
 import { validateClassification } from "../utils/validateClassification"
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 export const uploadDocument = async (req:any,res:any)=>{
 
@@ -15,6 +21,31 @@ export const uploadDocument = async (req:any,res:any)=>{
       return res.status(400).json({message:"No file uploaded"})
     }
 
+    /*
+    ==========================
+    UPLOAD FILE TO SUPABASE
+    ==========================
+    */
+
+    const fileName = `${Date.now()}-${file.originalname}`
+
+    const { error } = await supabase.storage
+      .from("documents")
+      .upload(fileName, file.buffer, {
+        contentType:file.mimetype
+      })
+
+    if(error){
+      console.error(error)
+      return res.status(500).json({
+        message:"Storage upload failed"
+      })
+    }
+
+    const fileUrl =
+      `${process.env.SUPABASE_URL}/storage/v1/object/public/documents/${fileName}`
+
+
     let status = "UNVERIFIED"
     let documentVerifyId = null
 
@@ -28,7 +59,7 @@ export const uploadDocument = async (req:any,res:any)=>{
 
       const mimeType = file.mimetype
 
-      const classification = await classifyDocument(file.path,mimeType)
+      const classification = await classifyDocument(file.buffer,mimeType)
 
       const valid = validateClassification(type,classification)
 
@@ -38,27 +69,15 @@ export const uploadDocument = async (req:any,res:any)=>{
         })
       }
 
-      /*
-      ==========================
-      VERIFY API (DISABLED)
-      ==========================
-      */
-
-      // Instead of calling Truuth Verify API
-      // we just mark document as IN_PROGRESS
-
       status = "IN_PROGRESS"
       documentVerifyId = null
     }
 
     /*
     ==========================
-    RESUME + ADDITIONAL
+    SAVE DOCUMENT
     ==========================
     */
-
-    // they stay UNVERIFIED
-    // no Truuth APIs called
 
     const requiredTypes = ["resume","driver_license","passport"]
 
@@ -78,7 +97,7 @@ export const uploadDocument = async (req:any,res:any)=>{
         document = await prisma.document.update({
           where:{ id: existing.id },
           data:{
-            fileUrl:file.path,
+            fileUrl,
             status,
             documentVerifyId
           }
@@ -90,7 +109,7 @@ export const uploadDocument = async (req:any,res:any)=>{
           data:{
             type,
             label,
-            fileUrl:file.path,
+            fileUrl,
             status,
             documentVerifyId,
             user:{
@@ -102,14 +121,13 @@ export const uploadDocument = async (req:any,res:any)=>{
       }
 
     }
-
     else{
 
       document = await prisma.document.create({
         data:{
           type,
           label,
-          fileUrl:file.path,
+          fileUrl,
           status,
           documentVerifyId,
           user:{
