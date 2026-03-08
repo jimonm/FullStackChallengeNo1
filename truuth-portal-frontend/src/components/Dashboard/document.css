@@ -108,3 +108,12 @@
   border:1px solid #d4d4dc;
   min-width:220px;
 }
+.status-pending{
+  background:#f3f4f6;
+  color:#6b7280;
+}
+
+.status-verified{
+  background:#dcfce7;
+  color:#166534;
+}
