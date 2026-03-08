@@ -27,7 +27,7 @@
   margin-top:15px;
 }
 
-.primary-btn{
+.login-btn{
   width:100%;
   padding:12px;
   border:none;
@@ -39,17 +39,17 @@
   transition:all 0.2s ease;
 }
 
-.primary-btn:hover{
+.login-btn:hover{
   background:#4c1d95;
 }
 
-.primary-btn.loading{
+.login-btn.loading{
   background:#9ca3af;
   cursor:not-allowed;
   opacity:0.8;
 }
 
-.primary-btn.loading::after{
+.login-btn.loading::after{
   content:"";
   margin-left:8px;
   width:14px;

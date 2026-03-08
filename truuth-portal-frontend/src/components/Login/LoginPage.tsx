@@ -67,7 +67,7 @@ export default function LoginPage({ onLogin }: any){
           />
 
           <button
-            className={`primary-btn ${loading ? "loading" : ""}`}
+            className={`login-btn ${loading ? "loading" : ""}`}
             type="submit"
             disabled={loading}
           >
