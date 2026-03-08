@@ -22,7 +22,7 @@ export default function DocumentCard({
 
   const uploaded = !!doc
   const status = doc?.status || "UNVERIFIED"
-
+  const [uploading, setUploading] = useState(false)
   const [showResult, setShowResult] = useState(false)
 
   const fileName = doc?.fileUrl
@@ -46,16 +46,22 @@ export default function DocumentCard({
       formData.append("file", file)
       formData.append("type", type)
 
-      try {
+      setUploading(true)
 
-        await uploadDocument(formData)
-        await reload()
+        try {
 
-      } catch {
+          await uploadDocument(formData)
+          await reload()
 
-        alert("Upload failed")
+        } catch {
 
-      }
+          alert("Upload failed")
+
+        } finally {
+
+          setUploading(false)
+
+        }
 
     }
 
@@ -145,9 +151,24 @@ export default function DocumentCard({
       <button
         className="primary-btn"
         onClick={handleUpload}
+        disabled={uploading}
       >
-        {uploaded ? <FiRotateCcw /> : <FiUpload />}
-        {uploaded ? "Upload again" : "Upload"}
+        {uploading ? (
+            <>
+              <FiUpload />
+              Uploading...
+            </>
+          ) : uploaded ? (
+            <>
+              <FiRotateCcw />
+              Upload again
+            </>
+          ) : (
+            <>
+              <FiUpload />
+              Upload
+            </>
+          )}
       </button>
 
       {showResult && (

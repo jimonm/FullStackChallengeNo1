@@ -59,7 +59,13 @@ export const uploadDocument = async (req:any,res:any)=>{
 
       const mimeType = file.mimetype
 
-      const classification = await classifyDocument(file.buffer,mimeType)
+      if(!mimeType.startsWith("image/")){
+        return res.status(400).json({
+          message:"Driver licence / passport must be an image (jpg or png)"
+        })
+      }
+
+const classification = await classifyDocument(file.path,mimeType)
 
       const valid = validateClassification(type,classification)
 
